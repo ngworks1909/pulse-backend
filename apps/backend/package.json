@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx tsc -b && nodemon ./dist/index.js",
-    "db:generate": "prisma generate --schema ./prisma/schema.prisma",
-    "db:push": "prisma db push --schema ./prisma/schema.prisma",
+    "db:generate": "prisma generate --schema=../../packages/db/prisma/schema.prisma",
+    "db:push": "prisma db push --schema=../../packages/db/prisma/schema.prisma",
     "build": "npm run db:generate && npm run db:push && tsc -b"
   },
   "keywords": [],
