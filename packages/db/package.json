@@ -1,0 +1,13 @@
+{
+  "name": "@repo/db",
+  "version": "1.0.0",
+  "dependencies": {
+    "@prisma/client": "^6.19.0",
+    "dotenv": "^16.0.3",
+    "prisma": "6.19"
+  },
+  "scripts": {
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push"
+  }
+}

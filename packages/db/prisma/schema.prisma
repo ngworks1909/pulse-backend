@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId    String   @id @default(auto()) @map("_id") @db.ObjectId
+  username  String
+  mobile    String   @unique
+  token     String?  @unique
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  alerts    Alert[]
+}
+
+model City {
+  cityId           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name             String   
+  code             String   @unique
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  sourceTrips      Trip[]   @relation("source")
+  destinationTrips Trip[]   @relation("destination")
+
+  @@unique([name, code])
+}
+
+model Trip {
+  tripId        String         @id @default(auto()) @map("_id") @db.ObjectId
+  sourceId      String         @db.ObjectId
+  source        City           @relation("source", fields: [sourceId], references: [cityId])
+  destinationId String         @db.ObjectId
+  destination   City           @relation("destination", fields: [destinationId], references: [cityId])
+  travelDate    DateTime
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  alerts        Alert[]
+  fareSnapshots FareSnapshot[]
+
+  @@unique([sourceId, destinationId, travelDate])
+}
+
+model FareSnapshot {
+  fareSnapShotId String   @id @default(auto()) @map("_id") @db.ObjectId
+  tripId         String   @db.ObjectId
+  trip           Trip     @relation(fields: [tripId], references: [tripId])
+  fare           Float
+  checkedAt      DateTime @default(now())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Alert {
+  alertId     String   @id @default(auto()) @map("_id") @db.ObjectId
+  tripId      String   @db.ObjectId
+  trip        Trip     @relation(fields: [tripId], references: [tripId])
+  userId      String   @db.ObjectId
+  user        User     @relation(fields: [userId], references: [userId])
+  targetPrice Float
+  notified    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, tripId])
+}
+
+enum Role {
+  ADMIN
+  USER
+}
