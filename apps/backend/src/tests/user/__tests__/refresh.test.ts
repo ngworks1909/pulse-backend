@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { DeepMockProxy, mockReset } from "jest-mock-extended";
 import jwt from "jsonwebtoken";
 import request from "supertest";
-import { app } from "../../../bin";
+import { app } from "../../..";
 import { prisma } from "../../../lib/client";
 
 jest.mock("../../../lib/client");
