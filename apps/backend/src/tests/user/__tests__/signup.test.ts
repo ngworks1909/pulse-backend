@@ -1,9 +1,9 @@
 import { afterAll, beforeEach, describe, expect, it, jest } from "@jest/globals";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { PrismaClient } from "@prisma/client";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { DeepMockProxy, mockReset } from "jest-mock-extended";
 import request from "supertest";
-import { app } from "../../../index";
+import { app } from "../../../bin";
 import { prisma } from "../../../lib/client";
 
 jest.mock("../../../lib/client");

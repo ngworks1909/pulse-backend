@@ -1,10 +1,16 @@
-import { app } from "./index";
+import express from 'express';
+import dotenv from 'dotenv';
+import userRoutes from './routes/user';
+import cityRoutes from './routes/city';
+import tripRoutes from './routes/trip';
 
-const PORT = process.env.PORT || 3000;
-app.get("/", (_, res) => {
-    res.send("Server running");
-})
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+export const app = express();
+dotenv.config();
+
+app.use(express.json());
+
+app.use("/api/user", userRoutes);
+app.use("/api/city", cityRoutes);
+app.use("/api/trip", tripRoutes);
+
