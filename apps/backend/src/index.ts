@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 import userRoutes from './routes/user';
 import cityRoutes from './routes/city';
 import tripRoutes from './routes/trip';
-import { runScheduler } from './cron/cron';
 
 
 const app = express();
