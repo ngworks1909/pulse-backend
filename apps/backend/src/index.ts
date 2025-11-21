@@ -1,18 +1,16 @@
-import express from "express";
-import {PrismaClient} from '@prisma/client';
+import express from 'express';
+import dotenv from 'dotenv';
+import userRoutes from './routes/user';
+import cityRoutes from './routes/city';
+import tripRoutes from './routes/trip';
 
-const app = express();
 
-const prisma = new PrismaClient();
+export const app = express();
+dotenv.config();
 
 app.use(express.json());
 
-app.get("/", async(req, res) => {
-  const data = await prisma.user.findMany();
-  res.json(data);
-});
+app.use("/api/user", userRoutes);
+app.use("/api/city", cityRoutes);
+app.use("/api/trip", tripRoutes);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
