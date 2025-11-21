@@ -16,7 +16,7 @@ app.use("/api/city", cityRoutes);
 app.use("/api/trip", tripRoutes);
 app.get("/api/cron", async(_, res) => {
     await runScheduler();
-    res.end();
+    res.send("Cron job executed");
 })
 app.get("/", (_, res) => {
     res.send("Server running");
