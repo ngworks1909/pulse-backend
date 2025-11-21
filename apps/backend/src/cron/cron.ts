@@ -1,7 +1,8 @@
-import { prisma } from "../lib/client";
 import { fetchBuses, fetchTrips } from "./action";
+import { prisma } from "../lib/client";
 import { sendNotificationsToUsers } from "../notifer/notifer";
 import { Expo } from "expo-server-sdk";
+
 
 function formatDate(date: Date){
     const travelDate = new Date(date);
@@ -13,8 +14,10 @@ function formatDate(date: Date){
     return formatted
 }
 
-export async function runScheduler(){
+
+export async function runScheduler () {
   try {
+    console.log("Running scheduler...")
     const trips = await fetchTrips();
     for (const trip of trips){
         const source = trip.source.code;

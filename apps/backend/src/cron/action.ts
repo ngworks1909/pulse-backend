@@ -3,7 +3,7 @@ import { prisma } from "../lib/client";
 
 export async function fetchTrips(){
     const today = new Date();
-    today.setUTCHours(12, 0, 0, 0);
+    today.setUTCHours(0, 0, 0, 0);
     const trips = await prisma.trip.findMany({
         where: {
             travelDate: {
