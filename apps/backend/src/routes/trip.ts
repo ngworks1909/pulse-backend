@@ -31,10 +31,10 @@ router.post("/create", verifyAuth("USER"), async(req: UserRequest, res) => {
         const normalizedTravelDate = new Date(travelDate);
         const today = new Date();
         today.setUTCHours(12, 0, 0, 0);
+        normalizedTravelDate.setUTCHours(12, 0, 0, 0)
         if(normalizedTravelDate < today){
             return res.status(400).json({message: "Travel date should be in the future"});
         }
-        normalizedTravelDate.setUTCHours(12, 0, 0, 0)
         const existingTrip = await prisma.trip.findUnique({
             where: {
                 sourceId_destinationId_travelDate: {
