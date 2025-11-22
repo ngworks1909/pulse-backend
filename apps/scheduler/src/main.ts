@@ -16,11 +16,8 @@ function formatDate(date: Date){
 
 
 
-// cron.schedule("*/20 * * * *", );
 
-export async function runScheduler(){
-  try {
-    console.log("Running scheduler...")
+export async function main(){
     const trips = await fetchTrips();
     for (const trip of trips){
         const source = trip.source.code;
@@ -69,9 +66,5 @@ export async function runScheduler(){
                 }
             })
         }
-    }
-    
-  } catch (error) {
-    console.error("Error processing trips:", error);
-  }
+    } 
 }

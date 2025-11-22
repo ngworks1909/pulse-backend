@@ -1,6 +1,23 @@
 import axios from "axios";
 import { prisma } from "./lib/client";
 
+interface Bus{
+    operatorId: number;
+    travelsName: string;
+    busType: string;
+    busTypeId: number;
+    totalRatings: number;
+    numberOfReviews: number;
+    departureTime: string;
+    arrivalTime: string;
+    journeyDurationMin: number;
+    standardBpName: string;
+    standardpName: string;
+    isAc: boolean;
+    isSleeper: boolean;
+    fareList: number[];
+}
+
 export async function fetchTrips(){
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
