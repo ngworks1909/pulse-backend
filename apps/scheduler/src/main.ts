@@ -24,8 +24,21 @@ export async function main(){
         const destination = trip.destination.code;
         const travelDate = formatDate(trip.travelDate);
         const buses = await fetchBuses(source, destination, travelDate);
-        const allFares = buses.flatMap(bus => bus.fareList);
+        let allFares = [];
+        for(const bus of buses){
+            if(bus.operatorOfferCampaign){
+                const cmpgFares = bus.operatorOfferCampaign.CmpgList[0].DiscountedPrices;
+                allFares.push(...cmpgFares);
+            }
+            else{
+                const boostFares = bus.rdBoostInfo.seatPrices.split(",")
+                    .map(item => Number(item.split(":")[0]));
+                allFares.push(...boostFares);
+            }
+        }
+        console.log(allFares);
         const minFare = Math.min(...allFares);
+        console.log(`Min fare for trip ${trip.tripId} on ${travelDate} is ₹${minFare}`);
 
         await prisma.fareSnapshot.create({
             data: {
